@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Chat con Socket.IO</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    // Conexión de Socket.IO al servidor
+    var socket = io();
+
+    // Función para enviar mensajes del chat 1
+    function enviarMensaje1() {
+      var mensaje = document.getElementById('mensaje1').value;
+      var hora = new Date().toLocaleTimeString();
+    
+      socket.emit('chat message 1', mensaje + ' - ' + hora); 
+      document.getElementById('mensaje1').value = '';
+      return false;
+    }
+
+    // Función para recibir mensajes del chat 1
+    socket.on('chat message 1', function (msg) {
+      var listaMensajes = document.getElementById('lista-mensajes');
+      var mensaje = document.createElement('li');
+      mensaje.textContent = msg;
+      mensaje.style.cssText = 'margin-left: 130px; width:40%; padding:4px ; height:25%;';
+      listaMensajes.appendChild(mensaje);
+    });
+
+    socket.on('chat message 1', function (msg) {
+      var listaMensajes = document.getElementById('lista-mensajes-2');
+      var mensaje = document.createElement('li');
+      mensaje.textContent = msg;
+      mensaje.style.cssText = 'margin-right: 160px;background: red; width:50%; height:25%; padding:4px ;border-radius: 0px 18px 18px 18px; ';
+
+      listaMensajes.appendChild(mensaje);
+    });
+
+    // Función para enviar mensajes del chat 2
+    function enviarMensaje2() {
+      var mensaje = document.getElementById('mensaje2').value;
+      var hora = new Date().toLocaleTimeString();
+      socket.emit('chat message 2', mensaje + ' - ' + hora); 
+
+      document.getElementById('mensaje2').value = '';
+      return false;
+    }
+
+    // Función para recibir mensajes del chat 2
+    socket.on('chat message 2', function (msg) {
+      var listaMensajes = document.getElementById('lista-mensajes');
+      var mensaje = document.createElement('li');
+      mensaje.style.cssText = 'margin-right: 160px;background: red; width:50%; height:25%; padding:4px ; border-radius: 0px 18px 18px 18px; ';
+      mensaje.textContent = msg;
+      listaMensajes.appendChild(mensaje);
+
+    });
+    socket.on('chat message 2', function (msg) {
+      var listaMensajes = document.getElementById('lista-mensajes-2');
+      var mensaje = document.createElement('li');
+      mensaje.style.cssText = 'margin-left: 120px; width:40%; padding:4px ; height:25%;';
+      mensaje.textContent = msg;
+      listaMensajes.appendChild(mensaje);
+    });
+  </script>
+</head>
+
+<body>
+  <CENTER>
+    <div class="container">
+      <div class="enzo">
+
+        <h1><span><img src="https://i.ibb.co/5BkjG9H/Captura-de-pantalla-22.png"></span>Enzo Velarde</h1>
+        <p class="en" id="en-linea-1">En línea</p> <!-- texto de "en línea" para el chat 1 -->
+
+
+        <ul id="lista-mensajes"></ul>
+        <form onsubmit="return enviarMensaje1()">
+          <input id="mensaje1" autocomplete="off" />
+          <button class="boton">➤</button>
+        </form>
+
+      </div>
+
+      <div class="gohan">
+
+        <h1><span><img src="https://i.ibb.co/SdLY4sN/gohan.jpg"></span>Son Gohan</h1>
+        <p class="en" id="en-linea-2">En línea</p> <!-- texto de "en línea" para el chat 2 -->
+        <ul id="lista-mensajes-2"></ul>
+        <form onsubmit="return enviarMensaje2()">
+          <input id="mensaje2" autocomplete="off" />
+          <button class="boton">➤</button>
+        </form>
+      </div>
+
+    </div>
+  </CENTER>
+
+
+
+</body>
+
+</html>
+<style>
+  .container {
+    display: flex;
+    width: 800px;
+
+  }
+
+  h1 {
+    margin: 0;
+    background-color: #4CAF50;
+    color: white;
+    width: inherit;
+    text-align: right;
+  }
+
+  h1 span img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 10px;
+  }
+
+  p {
+    margin: 0;
+    padding: 5px;
+    background-color: #4CAF50;
+    /* fondo verde */
+    color: white;
+    /* texto blanco */
+  }
+
+  .gohan {
+
+    width: auto;
+    border: solid black;
+    margin-left: auto;
+  }
+
+  .enzo {
+    border: solid black;
+    width: auto;
+  }
+
+  .en {
+    text-align: end;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 200px;
+    width: 200px;
+    background-image: url("https://midu.dev/images/tags/node.png");
+   
+  }
+
+  li {
+    display: flex;
+    align-items: flex-end;
+    margin: 10px 0;
+    border-radius: 18px 0px 18px 18px;
+    background: #000000c7;
+    color: #fff;
+    width: 10;
+  }
+
+  li span {
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .enzo li span {
+    background-color: #DCF8C6;
+    margin-left: 10px;
+  }
+
+  .gohan li span {
+    background-color: #EDEDED;
+    margin-right: 10px;
+  }
+
+  li span img {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+
+  .container_enzo {
+    display: flex;
+    width: 100%;
+  }
+  .boton{
+    color: #4CAF50;
+    background-color: black;
+  }
+</style>
